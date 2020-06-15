@@ -18,6 +18,10 @@ const SelectTimeButton = ({children, handleIncrement, handleDecrement, value}) =
   );
 };
 
-SelectTimeButton.propTypes = {};
+SelectTimeButton.propTypes = {
+  handleIncrement: PropTypes.func.isRequired,
+  handleDecrement: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 export default SelectTimeButton;
