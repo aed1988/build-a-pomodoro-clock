@@ -1,20 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./SelectTimeButton.modules.sass";
 
-const SelectTimeButton = ({children, handleIncrement, handleDecrement, value}) => {
+const SelectTimeButton = ({
+  children,
+  handleIncrement,
+  handleDecrement,
+  value,
+  lastUpdatedValue,
+}) => {
+  const childrenToLowerCase = children.toLowerCase();
+
   return (
-    <>
-      <button onClick={handleIncrement} value={value} name={children.toLowerCase()}>
+    <div className="container">
+      <button
+        className="button button--increment"
+        onClick={handleIncrement}
+        value={value}
+        name={childrenToLowerCase}
+      >
         Increment
       </button>
-      <p>
-        {children}: {value}
-      </p>
-
-      <button onClick={handleDecrement} value={value} name={children.toLowerCase()}>
+      <button
+        className="button button--decrement"
+        onClick={handleDecrement}
+        value={value}
+        name={childrenToLowerCase}
+      >
         Decrement
       </button>
-    </>
+      <p
+        className={
+          `button__text ` +
+          (lastUpdatedValue === childrenToLowerCase ? "underlined" : undefined)
+        }
+      >
+        {children}
+      </p>
+    </div>
   );
 };
 

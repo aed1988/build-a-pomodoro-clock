@@ -65,9 +65,8 @@ const ClockContainer = () => {
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
         handleReset={handleReset}
+        lastUpdatedValue={lastUpdatedValue}
       />
-      <br />
-      {`Time: ${time}`}
     </>
   );
 };

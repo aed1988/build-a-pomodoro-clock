@@ -1,0 +1,25 @@
+.container
+  display: grid
+  grid-template-areas: 'increment decrement' 'text text'
+  background: #eb2e2e77
+  font-size: 3rem
+  min-width: 250px
+  text-align: center
+  padding: 30px
+  margin-top: 2rem
+
+
+.button + .button
+  margin-left: 7px
+
+.button--increment
+  grid-area: increment
+.button--decrement
+  grid-area: decrement
+
+.button__text 
+  grid-area: text
+  color: white
+  
+.underlined
+  text-decoration: underline
