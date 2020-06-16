@@ -2,42 +2,35 @@ import React, {useEffect, useState} from "react";
 import ClockComponent from "./ClockComponent";
 
 const ClockContainer = () => {
-  const [workTime, setWorkTime] = useState(1500);
-  const [breakTime, setBreakTime] = useState(300);
-  const [time, setTime] = useState(3000);
+  const [time, setTime] = useState({work: 1500, rest: 300});
   const [isTimeCountingDown, setIsTimeCountingDown] = useState(false);
-  const [lastUpdatedValue, setLastUpdatedValue] = useState("");
-
-  useEffect(() => {
-    if (lastUpdatedValue === "Work") {
-      setTime(workTime);
-    } else if (lastUpdatedValue === "Break") {
-      setTime(breakTime);
-    }
-  }, [lastUpdatedValue, breakTime, workTime]);
+  const [lastUpdatedValue, setLastUpdatedValue] = useState("work");
 
   useEffect(() => {
     let countdownTimeId = null;
 
-    if (!isTimeCountingDown && time !== 0) {
+    if (!isTimeCountingDown && time.work !== 0) {
       clearInterval(countdownTimeId);
-    } else if (time === 0) {
+    } else if (time.work === 0) {
       setTimeout(() => {
         handleReset();
       }, 2000);
     } else {
       countdownTimeId = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
+        setTime((prevTime) => ({
+          ...prevTime,
+          [lastUpdatedValue]: prevTime[lastUpdatedValue] - 1,
+        }));
       }, 1000);
     }
 
     return () => {
       clearInterval(countdownTimeId);
     };
-  }, [time, isTimeCountingDown]);
+  }, [time, isTimeCountingDown, lastUpdatedValue]);
 
   const handleReset = () => {
-    setTime(3000);
+    setTime({work: 1500, rest: 300});
     setIsTimeCountingDown(false);
   };
 
@@ -46,31 +39,28 @@ const ClockContainer = () => {
   };
 
   const handleIncrement = (event) => {
-    const {value} = event.target;
-    if (value === "Work") {
-      setWorkTime((prevWorkTime) => prevWorkTime + 60);
-    } else if (value === "Break") {
-      setBreakTime((prevBreakTime) => prevBreakTime + 60);
-    }
-    setLastUpdatedValue(value);
+    const {name, value} = event.target;
+    setTime({
+      ...time,
+      [name]: parseInt(value) + 60,
+    });
+    setLastUpdatedValue(name);
   };
 
   const handleDecrement = (event) => {
-    const {value} = event.target;
-    if (value === "Work") {
-      setWorkTime((prevWorkTime) => prevWorkTime - 60);
-    } else if (value === "Break") {
-      setBreakTime((prevBreakTime) => prevBreakTime - 60);
-    }
-    setLastUpdatedValue(value);
+    const {name, value} = event.target;
+    setTime({
+      ...time,
+      [name]: parseInt(value) - 60,
+    });
+    setLastUpdatedValue(name);
   };
 
   return (
     <>
       <ClockComponent
+        timeToDisplay={time[lastUpdatedValue]}
         time={time}
-        workTime={workTime}
-        breakTime={breakTime}
         handlePlayPause={handlePlayPause}
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
