@@ -1,0 +1,28 @@
+.section--buttons
+  display: flex
+  justify-content: center
+
+.section--display
+  display: grid
+  grid-template-areas: ". text ." ". buttons ."
+  justify-content: center
+  min-width: 400px
+
+.section--display__text
+  grid-area: text
+  font-size: 10rem
+  font-weight: 800
+  margin: 3rem
+  padding: 0 1.5rem
+  box-shadow: inset 0.25rem 0.25rem #dfd7d7, 0.5rem 0.5rem #f06d6d
+
+.section--display__buttons
+  grid-area: buttons
+  display: grid
+  grid-template-areas: ". button1 button2 ."
+  justify-content: center
+  
+
+
+.section--display__button + .section--display__button
+  margin-left: 5px

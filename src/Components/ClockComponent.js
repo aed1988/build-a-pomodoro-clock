@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import "./ClockComponent.modules.sass";
+
 import SelectTimeButton from "./SelectTimeButton";
 
 const ClockComponent = ({
@@ -10,6 +12,7 @@ const ClockComponent = ({
   handleIncrement,
   handleDecrement,
   handleReset,
+  lastUpdatedValue,
 }) => {
   const timeDisplay = `${Math.floor(timeToDisplay / 60)}:${(
     timeToDisplay % 60
@@ -18,27 +21,37 @@ const ClockComponent = ({
   })}`;
 
   return (
-    <div>
-      <SelectTimeButton
-        handleIncrement={handleIncrement}
-        handleDecrement={handleDecrement}
-        value={work}
-      >
-        Work
-      </SelectTimeButton>
-      <br />
-      <SelectTimeButton
-        handleIncrement={handleIncrement}
-        handleDecrement={handleDecrement}
-        value={rest}
-      >
-        Rest
-      </SelectTimeButton>
-      <h1>{timeDisplay}</h1>
-      <button onClick={handlePlayPause}>Start/Pause</button>
-      <button onClick={handleReset}>Reset</button>
-      <br />
-    </div>
+    <>
+      <div className="section--buttons">
+        <SelectTimeButton
+          handleIncrement={handleIncrement}
+          handleDecrement={handleDecrement}
+          value={work}
+          lastUpdatedValue={lastUpdatedValue}
+        >
+          Work
+        </SelectTimeButton>
+        <SelectTimeButton
+          handleIncrement={handleIncrement}
+          handleDecrement={handleDecrement}
+          value={rest}
+          lastUpdatedValue={lastUpdatedValue}
+        >
+          Rest
+        </SelectTimeButton>
+      </div>
+      <div className="section--display">
+        <p className=" section--display section--display__text">{timeDisplay}</p>
+        <div className="section--display__buttons">
+          <button className="section--display__button" onClick={handlePlayPause}>
+            Start/Pause
+          </button>
+          <button className="section--display__button" onClick={handleReset}>
+            Reset
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 
