@@ -9,13 +9,22 @@ const ClockContainer = () => {
   useEffect(() => {
     let countdownTimeId = null;
 
-    if (!isTimeCountingDown && time.work !== 0) {
+    // Paused after being played
+    if (!isTimeCountingDown && time[lastUpdatedValue] !== 0) {
       clearInterval(countdownTimeId);
-    } else if (time.work === 0) {
-      setTimeout(() => {
-        handleReset();
-      }, 2000);
-    } else {
+    }
+
+    // Time runs out
+    else if (time[lastUpdatedValue] === 0) {
+      setTimeout(alert("Time's up"), 1000);
+      setIsTimeCountingDown(false);
+      lastUpdatedValue === "work"
+        ? setLastUpdatedValue("rest")
+        : setLastUpdatedValue("work");
+    }
+
+    // Timer is played
+    else {
       countdownTimeId = setInterval(() => {
         setTime((prevTime) => ({
           ...prevTime,
@@ -35,7 +44,7 @@ const ClockContainer = () => {
   };
 
   const handlePlayPause = () => {
-    setIsTimeCountingDown((prevIsTimeCountingDown) => !prevIsTimeCountingDown);
+    toggleIsCountingDown();
   };
 
   const handleIncrement = (event) => {
@@ -49,12 +58,18 @@ const ClockContainer = () => {
 
   const handleDecrement = (event) => {
     const {name, value} = event.target;
-    setTime({
-      ...time,
-      [name]: parseInt(value) - 60,
-    });
     setLastUpdatedValue(name);
+    if (time[lastUpdatedValue] < 60) return;
+    if (time[lastUpdatedValue] > 60) {
+      setTime({
+        ...time,
+        [name]: parseInt(value) - 60,
+      });
+    }
   };
+
+  const toggleIsCountingDown = () =>
+    setIsTimeCountingDown((prevIsTimeCountingDown) => !prevIsTimeCountingDown);
 
   return (
     <>
