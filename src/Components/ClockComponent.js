@@ -24,6 +24,7 @@ const ClockComponent = ({
     <>
       <div className="section--buttons">
         <SelectTimeButton
+          id="work-label"
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}
           value={work}
@@ -32,6 +33,7 @@ const ClockComponent = ({
           Work
         </SelectTimeButton>
         <SelectTimeButton
+          id="break-label"
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}
           value={rest}
@@ -41,12 +43,18 @@ const ClockComponent = ({
         </SelectTimeButton>
       </div>
       <div className="section--display">
-        <p className=" section--display section--display__text">{timeDisplay}</p>
+        <p id="timer-label" className=" section--display section--display__text">
+          {timeDisplay}
+        </p>
         <div className="section--display__buttons">
-          <button className="section--display__button" onClick={handlePlayPause}>
+          <button
+            id="start_stop"
+            className="section--display__button"
+            onClick={handlePlayPause}
+          >
             Start/Pause
           </button>
-          <button className="section--display__button" onClick={handleReset}>
+          <button id="reset" className="section--display__button" onClick={handleReset}>
             Reset
           </button>
         </div>

@@ -16,11 +16,12 @@ const ClockContainer = () => {
 
     // Time runs out
     else if (time[lastUpdatedValue] === 0) {
+      handleReset();
       setTimeout(alert("Time's up"), 1000);
-      setIsTimeCountingDown(false);
       lastUpdatedValue === "work"
         ? setLastUpdatedValue("rest")
         : setLastUpdatedValue("work");
+      toggleIsCountingDown();
     }
 
     // Timer is played
@@ -49,11 +50,12 @@ const ClockContainer = () => {
 
   const handleIncrement = (event) => {
     const {name, value} = event.target;
+    setLastUpdatedValue(name);
+    if (time[lastUpdatedValue] > 60) return;
     setTime({
       ...time,
       [name]: parseInt(value) + 60,
     });
-    setLastUpdatedValue(name);
   };
 
   const handleDecrement = (event) => {

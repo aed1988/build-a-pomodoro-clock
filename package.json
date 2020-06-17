@@ -45,7 +45,7 @@
     "*.+(js|jsx)": [
       "eslint --fix"
     ],
-    "*.+(json|sass|md)": [
+    "*.+(json|sass|md) | *.modules.sass": [
       "prettier --write"
     ]
   },
